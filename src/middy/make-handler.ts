@@ -3,9 +3,9 @@ import httpJsonBodyParser from '@middy/http-json-body-parser'
 import httpResponseSerializer from '@middy/http-response-serializer'
 import { IHttpRequest, IHttpResponse } from "../types/IHttp";
 
-type Handler = (request : IHttpRequest) => Promise<IHttpResponse>
+type Handler<TBody extends Record<string, any> | undefined> = (request : IHttpRequest<TBody>) => Promise<IHttpResponse>
 
-export function makeHandler(handler : Handler) {
+export function makeHandler<TBody extends Record<string, any> | undefined = undefined>(handler : Handler<TBody>) {
     return middy()
     .use(httpJsonBodyParser({disableContentTypeError: true}))
     .use(httpResponseSerializer({

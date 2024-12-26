@@ -1,5 +1,5 @@
-export interface IHttpRequest {
-    body?: Record<string, any>
+export interface IHttpRequest<TBody extends Record<string, any> | undefined > {
+    body: TBody
     headers?: Record<string, string>
 }
 
