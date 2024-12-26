@@ -12,6 +12,6 @@ export const handler = makeHandler<IHelloRequestBody>(async (request) => {
         body: {
             qualquer: request.body.firstName,
             coisa: request.body.lastName
-        }
+        },
     }
 })

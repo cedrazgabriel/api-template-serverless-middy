@@ -1,12 +1,14 @@
 import middy from "@middy/core";
 import httpJsonBodyParser from '@middy/http-json-body-parser'
 import httpResponseSerializer from '@middy/http-response-serializer'
+import httpMultipartBodyParser from '@middy/http-multipart-body-parser'
 import { IHttpRequest, IHttpResponse } from "../types/IHttp";
 
 type Handler<TBody extends Record<string, any> | undefined> = (request : IHttpRequest<TBody>) => Promise<IHttpResponse>
 
 export function makeHandler<TBody extends Record<string, any> | undefined = undefined>(handler : Handler<TBody>) {
     return middy()
+    .use(httpMultipartBodyParser({disableContentTypeError: true}))
     .use(httpJsonBodyParser({disableContentTypeError: true}))
     .use(httpResponseSerializer({
         defaultContentType: 'application/json',	
