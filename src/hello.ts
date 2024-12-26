@@ -1,6 +1,6 @@
-import middy from '@middy/core'
+import { makeHandler } from './middy/make-handler'
 
-export const handler = middy(async () => {
+export const handler = makeHandler(async () => {
     return{
         statusCode: 200,
         body: JSON.stringify({
