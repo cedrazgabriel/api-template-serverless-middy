@@ -17,6 +17,17 @@ export function errorHanderMiddleware(): MiddlewareObj<APIGatewayProxyEventV2> {
                         'Content-Type': 'application/json'
                     }
                 }
+            } else {
+                console.log(error)
+                request.response = {
+                    ...request.response,
+                    statusCode: 500,
+                    body: JSON.stringify({ error: 'Internal Server Error' }),
+                    headers: {
+                        ...request.response?.headers,
+                        'Content-Type': 'application/json'
+                    }
+                }
             }
 
         }
