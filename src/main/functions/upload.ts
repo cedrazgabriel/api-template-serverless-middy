@@ -1,9 +1,9 @@
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { randomUUID } from 'node:crypto';
 import { makeHandler } from './middy/make-handler'
-import { IFile } from './types/IFile';
-import { s3Cliente } from './clients/s3-client';
-import { HttpError } from './errors/http-error';
+import { IFile } from '../../application/types/IFile';
+import { s3Cliente } from '../../application/clients/s3-client';
+import { HttpError } from '../../application/errors/http-error';
 
 interface IUploadRequestBody {
     firstName: string

@@ -2,7 +2,7 @@ import middy from "@middy/core";
 import httpJsonBodyParser from '@middy/http-json-body-parser'
 import httpResponseSerializer from '@middy/http-response-serializer'
 import httpMultipartBodyParser from '@middy/http-multipart-body-parser'
-import { IHttpRequest, IHttpResponse } from "../types/IHttp";
+import { IHttpRequest, IHttpResponse } from "../application/types/IHttp";
 import { errorHanderMiddleware } from "./middlewares/error-handler";
 
 type Handler<TBody extends Record<string, any> | undefined> = (request: IHttpRequest<TBody>) => Promise<IHttpResponse>

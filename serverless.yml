@@ -49,5 +49,5 @@ functions:
           path: /users
           method: ANY
       - httpApi:
-          path: /users/{param}
+          path: /users/{param+}
           method: ANY    
