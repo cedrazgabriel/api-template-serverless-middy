@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { makeHandler } from './middy/make-handler'
 import { IFile } from './types/IFile';
 import { s3Cliente } from './clients/s3-client';
+import { HttpError } from './errors/http-error';
 
 interface IUploadRequestBody {
     firstName: string
@@ -13,6 +14,10 @@ interface IUploadRequestBody {
 
 export const handler = makeHandler<IUploadRequestBody>(async (request) => {
     const { file } = request.body
+
+    if (!file) {
+        throw new HttpError(400, { error: 'File is required' })
+    }
 
     const newFileName = `${randomUUID()}-${file.filename}`
 
