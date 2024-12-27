@@ -7,7 +7,7 @@ export function errorHanderMiddleware(): MiddlewareObj<APIGatewayProxyEventV2> {
         onError: (request) => {
             const { error } = request
 
-            if (error instanceof HttpError) {
+            if (error && (error instanceof HttpError || 'statusCode' in error)) {
                 request.response = {
                     ...request.response,
                     statusCode: error.statusCode,
