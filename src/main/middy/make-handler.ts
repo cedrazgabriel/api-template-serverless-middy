@@ -2,12 +2,13 @@ import middy from "@middy/core";
 import httpJsonBodyParser from '@middy/http-json-body-parser'
 import httpResponseSerializer from '@middy/http-response-serializer'
 import httpMultipartBodyParser from '@middy/http-multipart-body-parser'
-import { IHttpRequest, IHttpResponse } from "../application/types/IHttp";
+
 import { errorHanderMiddleware } from "./middlewares/error-handler";
+import { IController } from "../../application/types/IController";
+import { sanitizeObject } from "../utils/sanitize-object";
 
-type Handler<TBody extends Record<string, any> | undefined> = (request: IHttpRequest<TBody>) => Promise<IHttpResponse>
-
-export function makeHandler<TBody extends Record<string, any> | undefined = undefined>(handler: Handler<TBody>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function makeHandler(controller: IController<any>) {
     return middy()
         .use(httpMultipartBodyParser({ disableContentTypeError: true }))
         .use(httpJsonBodyParser({ disableContentTypeError: true }))
@@ -21,5 +22,11 @@ export function makeHandler<TBody extends Record<string, any> | undefined = unde
                 }
             ],
         }))
-        .handler(handler)
+        .handler(async (event) => {
+            return await controller.handler({
+                body: event.body,
+                headers: sanitizeObject(event.headers),
+                params: sanitizeObject(event.pathParameters),
+            })
+        })
 }

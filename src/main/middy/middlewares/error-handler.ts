@@ -1,6 +1,7 @@
 import { MiddlewareObj } from "@middy/core";
 import { APIGatewayProxyEventV2 } from "aws-lambda";
-import { HttpError } from "../../application/errors/http-error";
+import { HttpError } from "../../../application/errors/http-error";
+
 
 export function errorHanderMiddleware(): MiddlewareObj<APIGatewayProxyEventV2> {
     return {
