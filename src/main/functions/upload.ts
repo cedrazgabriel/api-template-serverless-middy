@@ -1,4 +1,4 @@
-import { UploadControler } from "../../application/controllers/upload-controller";
+import { makeUploadControler } from "../factories/make-upload-controller";
 import { makeHandler } from "../middy/make-handler";
 
-export const handler = makeHandler(new UploadControler());
+export const handler = makeHandler(makeUploadControler());

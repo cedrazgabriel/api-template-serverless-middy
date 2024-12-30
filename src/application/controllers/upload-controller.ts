@@ -3,14 +3,15 @@ import { HttpError } from "../errors/http-error";
 import { IController } from "../types/IController";
 import { IFile } from "../types/IFile";
 import { IHttpRequest, IHttpResponse } from "../types/IHttp";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { s3Cliente } from "../clients/s3-client";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 interface IUploadBody {
     file: IFile;
 }
 
 export class UploadControler implements IController<IUploadBody> {
+    constructor(private readonly s3Client: S3Client) { }
+
     async handler(request: IHttpRequest<IUploadBody>): Promise<IHttpResponse> {
         const { file } = request.body
 
@@ -26,7 +27,7 @@ export class UploadControler implements IController<IUploadBody> {
             Body: file.content,
         })
 
-        await s3Cliente.send(putObjectCommand)
+        await this.s3Client.send(putObjectCommand)
 
         return {
             statusCode: 200,
