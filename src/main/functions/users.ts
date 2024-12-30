@@ -1,21 +1,4 @@
-import { makeHandler } from "./middy/make-handler";
-import { makeRouterHandler } from "./middy/make-router-handler";
-
-const listUsersHandler = makeHandler(async () => {
-    return {
-        statusCode: 200,
-        body: {
-            qualquer: "coisa"
-        }
-    }
-})
-
-const updateUserHandler = makeHandler(async (request) => {
-    return {
-        statusCode: 200,
-        body: request
-    }
-})
+import { makeRouterHandler } from "../middy/make-router-handler";
 
 export const handler = makeRouterHandler([
     {
